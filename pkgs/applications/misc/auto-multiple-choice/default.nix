@@ -110,23 +110,24 @@ stdenv.mkDerivation rec {
     netpbm
     opencv
     pango
-    perl
-    perlPackages.ArchiveZip
-    perlPackages.Cairo
-    perlPackages.CairoGObject
-    perlPackages.DBDSQLite
-    perlPackages.DBI
-    perlPackages.Glib
-    perlPackages.GlibObjectIntrospection
-    perlPackages.Gtk3
-    perlPackages.LocaleGettext
-    perlPackages.PerlMagick
-    perlPackages.TextCSV
-    perlPackages.XMLParser
-    perlPackages.XMLSimple
-    perlPackages.XMLWriter
     poppler
-  ];
+  ] ++ (with perlPackages; [
+    perl
+    ArchiveZip
+    Cairo
+    CairoGObject
+    DBDSQLite
+    DBI
+    Glib
+    GlibObjectIntrospection
+    Gtk3
+    LocaleGettext
+    PerlMagick
+    TextCSV
+    XMLParser
+    XMLSimple
+    XMLWriter
+  ]);
 
   meta = with lib; {
     description = "Create and manage multiple choice questionnaires with automated marking.";
