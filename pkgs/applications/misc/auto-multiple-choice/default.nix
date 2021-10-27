@@ -131,10 +131,10 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Create and manage multiple choice questionnaires with automated marking.";
     longDescription = ''
-Create, manage and mark multiple-choice questionnaires.
-auto-multiple-choice features automated or manual formatting with
-LaTeX, shuffling of questions and answers and automated marking using
-Optical Mark Recognition.
+      Create, manage and mark multiple-choice questionnaires.
+      auto-multiple-choice features automated or manual formatting with
+      LaTeX, shuffling of questions and answers and automated marking using
+      Optical Mark Recognition.
 
 Questionnaires can be created using either a very simple text syntax,
 AMC-TXT, or LaTeX. In the latter case, your TeXLive installation must
