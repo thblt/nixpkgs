@@ -87,7 +87,7 @@ stdenv.mkDerivation rec {
     ]}:"$out/share/perl5 \
     --prefix XDG_DATA_DIRS : "$out/share" \
     --set TEXINPUTS ":.:$out/share/texmf/tex/latex/AMC"
-'';
+  '';
 
   nativeBuildInputs = [
     pkg-config
@@ -97,65 +97,65 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     cairo
-      cairo.dev
-      dblatex
-      gnumake
-      gobject-introspection
-      graphicsmagick
-      gsettings-desktop-schemas
-      gtk3
-      libnotify
-      librsvg
-      libxslt
-      netpbm
-      opencv
-      pango
-      perl
-      perlPackages.ArchiveZip
-      perlPackages.Cairo
-      perlPackages.CairoGObject
-      perlPackages.DBDSQLite
-      perlPackages.DBI
-      perlPackages.Glib
-      perlPackages.GlibObjectIntrospection
-      perlPackages.Gtk3
-      perlPackages.LocaleGettext
-      perlPackages.PerlMagick
-      perlPackages.TextCSV
-      perlPackages.XMLParser
-      perlPackages.XMLSimple
-      perlPackages.XMLWriter
-      poppler
-    ];
+    cairo.dev
+    dblatex
+    gnumake
+    gobject-introspection
+    graphicsmagick
+    gsettings-desktop-schemas
+    gtk3
+    libnotify
+    librsvg
+    libxslt
+    netpbm
+    opencv
+    pango
+    perl
+    perlPackages.ArchiveZip
+    perlPackages.Cairo
+    perlPackages.CairoGObject
+    perlPackages.DBDSQLite
+    perlPackages.DBI
+    perlPackages.Glib
+    perlPackages.GlibObjectIntrospection
+    perlPackages.Gtk3
+    perlPackages.LocaleGettext
+    perlPackages.PerlMagick
+    perlPackages.TextCSV
+    perlPackages.XMLParser
+    perlPackages.XMLSimple
+    perlPackages.XMLWriter
+    poppler
+  ];
 
   meta = with lib; {
     description = "Create and manage multiple choice questionnaires with automated marking.";
     longDescription = ''
-      Create, manage and mark multiple-choice questionnaires.
-      auto-multiple-choice features automated or manual formatting with
-      LaTeX, shuffling of questions and answers and automated marking using
-      Optical Mark Recognition.
+            Create, manage and mark multiple-choice questionnaires.
+            auto-multiple-choice features automated or manual formatting with
+            LaTeX, shuffling of questions and answers and automated marking using
+            Optical Mark Recognition.
 
-Questionnaires can be created using either a very simple text syntax,
-AMC-TXT, or LaTeX. In the latter case, your TeXLive installation must
-be combined with this package.  This can be done in configuration.nix
-as follows:
+      Questionnaires can be created using either a very simple text syntax,
+      AMC-TXT, or LaTeX. In the latter case, your TeXLive installation must
+      be combined with this package.  This can be done in configuration.nix
+      as follows:
 
-<screen>
-…
-environment.systemPackages = with pkgs; [
-  auto-multiple-choice
-  (texlive.combine {
-    inherit (pkgs.texlive) scheme-full;
-    extra =
-      {
-        pkgs = [ auto-multiple-choice ];
-      };
-  })
-];
-</screen>
+      <screen>
+      …
+      environment.systemPackages = with pkgs; [
+        auto-multiple-choice
+        (texlive.combine {
+          inherit (pkgs.texlive) scheme-full;
+          extra =
+            {
+              pkgs = [ auto-multiple-choice ];
+            };
+        })
+      ];
+      </screen>
 
-For usage instructions, see documentation at the project's homepage.
+      For usage instructions, see documentation at the project's homepage.
     '';
     homepage = "https://www.auto-multiple-choice.net/";
     changelog = "https://gitlab.com/jojo_boulix/auto-multiple-choice/-/blob/master/ChangeLog";
