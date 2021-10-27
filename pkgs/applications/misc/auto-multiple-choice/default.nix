@@ -59,7 +59,6 @@ stdenv.mkDerivation rec {
     "LANG_GTKSOURCEVIEW_DIR=/share/gtksourceview-4/language-specs"
     # Pretend to be redhat so `install` doesn't try to chown/chgrp.
     "SYSTEM_TYPE=rpm"
-
   ];
 
   preFixup = ''
