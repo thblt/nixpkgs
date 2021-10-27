@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
     "BINDIR=/bin"
     "PERLDIR=/share/perl5"
     "MODSDIR=/lib/AMC"
-    "TEXDIR=/share/texmf/tex/latex/AMC"
+    "TEXDIR=/tex/latex/" # what texlive.combine expects
     "TEXDOCDIR=/share/doc/texmf/AMC/"
     "MAN1DIR=/share/man/man1"
     "DESKTOPDIR=/share/applications"
@@ -66,7 +66,6 @@ stdenv.mkDerivation rec {
   '';
 
   postFixup = ''
-    mv $out/share/texmf/tex $out
     wrapProgram $out/bin/auto-multiple-choice \
     ''${makeWrapperArgs[@]} \
     --prefix PERL5LIB : "${with perlPackages; makePerlPath [
@@ -132,10 +131,10 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Create and manage multiple choice questionnaires with automated marking.";
     longDescription = ''
-            Create, manage and mark multiple-choice questionnaires.
-            auto-multiple-choice features automated or manual formatting with
-            LaTeX, shuffling of questions and answers and automated marking using
-            Optical Mark Recognition.
+      Create, manage and mark multiple-choice questionnaires.
+      auto-multiple-choice features automated or manual formatting with
+      LaTeX, shuffling of questions and answers and automated marking using
+      Optical Mark Recognition.
 
       Questionnaires can be created using either a very simple text syntax,
       AMC-TXT, or LaTeX. In the latter case, your TeXLive installation must
