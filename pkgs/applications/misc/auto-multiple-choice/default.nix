@@ -62,7 +62,8 @@ stdenv.mkDerivation rec {
   ];
 
   preFixup = ''
-  makeWrapperArgs+=("''${gappsWrapperArgs[@]}")'';
+    makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
+  '';
 
   postFixup = ''
     mv $out/share/texmf/tex $out
