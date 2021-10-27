@@ -89,11 +89,11 @@ stdenv.mkDerivation rec {
     --set TEXINPUTS ":.:$out/share/texmf/tex/latex/AMC"
 '';
 
-  nativeBuildInputs =
-    [ pkg-config
-      makeWrapper
-      wrapGAppsHook
-    ];
+  nativeBuildInputs = [
+    pkg-config
+    makeWrapper
+    wrapGAppsHook
+  ];
 
   buildInputs = [
     cairo
