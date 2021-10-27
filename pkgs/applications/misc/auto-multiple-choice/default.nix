@@ -95,8 +95,8 @@ stdenv.mkDerivation rec {
       wrapGAppsHook
     ];
 
-  buildInputs =
-    [ cairo
+  buildInputs = [
+    cairo
       cairo.dev
       dblatex
       gnumake
