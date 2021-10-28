@@ -34,9 +34,6 @@ stdenv.mkDerivation rec {
   # There's only the Makefile
   dontConfigure = true;
 
-  # Reported upstream as MR!25
-  patches = [ ./0001-fix-module-path-detection.patch ];
-
   makeFlags = [
     "PERLPATH=${perl}/bin/perl"
     # We *need* to pass DESTDIR, as the Makefile ignores PREFIX.
@@ -44,9 +41,9 @@ stdenv.mkDerivation rec {
     # Relative paths.
     "BINDIR=/bin"
     "PERLDIR=/share/perl5"
-    "MODSDIR=/lib/AMC"
+    "MODSDIR=/lib/"
     "TEXDIR=/tex/latex/" # what texlive.combine expects
-    "TEXDOCDIR=/share/doc/texmf/AMC/"
+    "TEXDOCDIR=/share/doc/texmf/" # TODO where to put this?
     "MAN1DIR=/share/man/man1"
     "DESKTOPDIR=/share/applications"
     "METAINFODIR=/share/metainfo"
