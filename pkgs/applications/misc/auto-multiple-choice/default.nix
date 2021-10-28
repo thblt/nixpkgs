@@ -21,13 +21,23 @@
 , pkg-config
 , poppler
 , auto-multiple-choice
+  # More
+, texlive
+, dejavu_fonts
+, ipaexfont
+, docbook-xsl-nons
+, fromPrecomp ? true # Whether to build from precomp or raw source.  Set to false to build from git.
 }:
 stdenv.mkDerivation rec {
   pname = "auto-multiple-choice";
   version = "1.5.1";
+  tarballStyle = (if fromPrecomp then "precomp" else "sources");
+
   src = fetchurl {
-    url = "https://download.auto-multiple-choice.net/${pname}_${version}_precomp.tar.gz";
-    sha256 = "71831122f7b43245d3289617064e0b561817c0130ee1773c1b957841b28b854c";
+    url = "https://download.auto-multiple-choice.net/${pname}_${version}_${tarballStyle}.tar.gz";
+    sha256 = (if fromPrecomp
+    then "0k45ifr42y4m3cy7gq8f2g01f62n1d70c5wn539lacmlywi130vi"
+    else "02w0ik2s8zc5yal9xzjl35ifxl7fxfdq2vibfgr7ymm9fdy4ciin");
   };
   tlType = "run";
 
@@ -41,9 +51,9 @@ stdenv.mkDerivation rec {
     # Relative paths.
     "BINDIR=/bin"
     "PERLDIR=/share/perl5"
-    "MODSDIR=/lib/"
-    "TEXDIR=/tex/latex/" # what texlive.combine expects
-    "TEXDOCDIR=/share/doc/texmf/" # TODO where to put this?
+    "MODSDIR=/lib"
+    "TEXDIR=/tex/latex" # what texlive.combine expects
+    "TEXDOCDIR=/share/doc/texmf" # TODO where to put this?
     "MAN1DIR=/share/man/man1"
     "DESKTOPDIR=/share/applications"
     "METAINFODIR=/share/metainfo"
@@ -56,7 +66,13 @@ stdenv.mkDerivation rec {
     "LANG_GTKSOURCEVIEW_DIR=/share/gtksourceview-4/language-specs"
     # Pretend to be redhat so `install` doesn't try to chown/chgrp.
     "SYSTEM_TYPE=rpm"
-  ];
+  ] ++ (if fromPrecomp
+  then [ ]
+  else [
+    "TEXINPUTS=:.:./img_pdf:${dblatex}/share/dblatex/latex/style:${dblatex}/share/dblatex/latex/misc"
+    # data for xsltproc. For building from raw source.
+    "XML_CATALOG_FILES=${docbook-xsl-nons}/share/xml/docbook-xsl-nons/catalog.xml"
+  ]);
 
   preFixup = ''
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
@@ -89,7 +105,21 @@ stdenv.mkDerivation rec {
     pkg-config
     makeWrapper
     wrapGAppsHook
-  ];
+  ] ++ (if fromPrecomp
+  then [ ]
+  else [
+    texlive.combined.scheme-full
+    # (texlive.combine {
+    #   inherit (texlive) scheme-medium appendix
+    #     changebar epic fontspec footmisc multirow overpic realscripts
+    #     subfigure titlesec xltxtra xetex;
+    # })
+    dejavu_fonts
+    ipaexfont
+    docbook-xsl-nons
+    perlPackages.XMLLibXML
+    librsvg
+  ]);
 
   buildInputs = [
     cairo
@@ -101,29 +131,30 @@ stdenv.mkDerivation rec {
     gsettings-desktop-schemas
     gtk3
     libnotify
-    librsvg
     libxslt
     netpbm
     opencv
     pango
     poppler
-  ] ++ (with perlPackages; [
-    perl
-    ArchiveZip
-    Cairo
-    CairoGObject
-    DBDSQLite
-    DBI
-    Glib
-    GlibObjectIntrospection
-    Gtk3
-    LocaleGettext
-    PerlMagick
-    TextCSV
-    XMLParser
-    XMLSimple
-    XMLWriter
-  ]);
+  ]
+  ++ (with perlPackages;
+    [
+      perl
+      ArchiveZip
+      Cairo
+      CairoGObject
+      DBDSQLite
+      DBI
+      Glib
+      GlibObjectIntrospection
+      Gtk3
+      LocaleGettext
+      PerlMagick
+      TextCSV
+      XMLParser
+      XMLSimple
+      XMLWriter
+    ]);
 
   meta = with lib; {
     description = "Create and manage multiple choice questionnaires with automated marking.";
