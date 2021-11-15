@@ -11,6 +11,7 @@
 , graphicsmagick
 , gsettings-desktop-schemas
 , gtk3
+, gnome3
 , libnotify
 , librsvg
 , libxslt
@@ -100,6 +101,7 @@ stdenv.mkDerivation rec {
     graphicsmagick
     gsettings-desktop-schemas
     gtk3
+    gnome3.adwaita-icon-theme
     libnotify
     librsvg
     libxslt
